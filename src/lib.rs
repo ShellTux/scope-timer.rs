@@ -3,13 +3,26 @@ use std::time::{Duration, Instant};
 #[derive(Debug)]
 pub struct ScopeTimer {
     now: Instant,
+    report: bool,
+}
+
+impl Default for ScopeTimer {
+    fn default() -> Self {
+        Self {
+            now: Instant::now(),
+            report: true,
+        }
+    }
 }
 
 impl ScopeTimer {
     pub fn new() -> Self {
-        Self {
-            now: Instant::now(),
-        }
+        Self::default()
+    }
+
+    pub fn with_reporting(mut self, report: bool) -> Self {
+        self.report = report;
+        self
     }
 
     pub fn elapsed_time(&self) -> Duration {
@@ -17,6 +30,10 @@ impl ScopeTimer {
     }
 
     pub fn report_elapsed_time(&self) {
+        if !self.report {
+            return;
+        }
+
         println!("Time elapsed: {:?}", self.elapsed_time());
     }
 }

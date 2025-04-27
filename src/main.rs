@@ -9,7 +9,7 @@ fn fib(number: usize) -> usize {
 
 fn main() {
     for number in 0..=41 {
-        let _ = ScopeTimer::new();
+        let _ = ScopeTimer::new().with_reporting(true);
         println!("fib({}) = {}", number, fib(number));
     }
 }
